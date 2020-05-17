@@ -9,6 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TicTacFoo.Data\TicTacFoo.Data.csproj" />
       <ProjectReference Include="..\TicTacFoo.Logic\TicTacFoo.Logic.csproj" />
     </ItemGroup>
 
