@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TicTacFoo.Api.Extensions;
 
 namespace TicTacFoo.Api
 {
@@ -36,6 +37,7 @@ namespace TicTacFoo.Api
             });
             services.AddCors();
             services.AddHttpContextAccessor();
+            services.AddServicesByAttribute();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
