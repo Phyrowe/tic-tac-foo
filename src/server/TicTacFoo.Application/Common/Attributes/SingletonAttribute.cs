@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace TicTacFoo.Logic.Attributes
+namespace TicTacFoo.Application.Common.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class TransientAttribute : Attribute
+    public class SingletonAttribute : Attribute
     {
     }
 }

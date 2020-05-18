@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using TicTacFoo.Logic.Attributes;
+using TicTacFoo.Application.Common.Attributes;
 
-namespace TicTacFoo.Api.Extensions
+namespace TicTacFoo.Application.Common.Extensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -21,8 +21,7 @@ namespace TicTacFoo.Api.Extensions
             var loadedAssemblies = AppDomain.CurrentDomain
                 .GetAssemblies()
                 .ToList();
-            var loadedPaths = loadedAssemblies
-                .Select(a => a.Location)
+            var loadedPaths = loadedAssemblies.Select(a => a.Location)
                 .ToArray();
 
             var referencedPaths = Directory
@@ -31,15 +30,14 @@ namespace TicTacFoo.Api.Extensions
                 .Where(r => !loadedPaths
                     .Contains(r, StringComparer.InvariantCultureIgnoreCase))
                 .ToList();
-            toLoad
-                .ForEach(path => loadedAssemblies
+            
+            toLoad.ForEach(path => loadedAssemblies
                     .Add(AppDomain.CurrentDomain
                         .Load(AssemblyName.GetAssemblyName(path))));
 
             foreach (var assembly in loadedAssemblies)
             {
-                var allTypes = assembly
-                    .GetTypes();
+                var allTypes = assembly.GetTypes();
 
                 var classesWithAttribute = allTypes
                     .Where(t => t.IsClass && t.CustomAttributes
@@ -47,22 +45,19 @@ namespace TicTacFoo.Api.Extensions
 
                 foreach (var implementationType in classesWithAttribute)
                 {
-                    var interfaceType = allTypes
-                        .FirstOrDefault(t => t.IsInterface && t.Name.Substring(1) == implementationType.Name);
+                    var interfaceType = implementationType.GetInterfaces()
+                        .FirstOrDefault(t => t.Name.Substring(1) == implementationType.Name);
 
-                    if (interfaceType == null)
+                    if(interfaceType == null)
                         throw new Exception(
                             $"Failed to resolve interface for class {implementationType.Name}, unable to inject dependency!");
 
                     if (injectableAttribute == typeof(TransientAttribute))
-                        services
-                            .AddTransient(interfaceType, implementationType);
+                        services.AddTransient(interfaceType, implementationType);
                     else if (injectableAttribute == typeof(ScopedAttribute))
-                        services
-                            .AddScoped(interfaceType, implementationType);
+                        services.AddScoped(interfaceType, implementationType);
                     else if (injectableAttribute == typeof(SingletonAttribute))
-                        services
-                            .AddSingleton(interfaceType, implementationType);
+                        services.AddSingleton(interfaceType, implementationType);
                 }
             }
         }
