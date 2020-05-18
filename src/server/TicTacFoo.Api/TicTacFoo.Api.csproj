@@ -5,12 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\TicTacFoo.Data\TicTacFoo.Data.csproj" />
-      <ProjectReference Include="..\TicTacFoo.Logic\TicTacFoo.Logic.csproj" />
+      <ProjectReference Include="..\TicTacFoo.Application\TicTacFoo.Application.csproj" />
+      <ProjectReference Include="..\TicTacFoo.Infrastructure\TicTacFoo.Infrastructure.csproj" />
     </ItemGroup>
 
 

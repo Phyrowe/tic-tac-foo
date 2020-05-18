@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TicTacFoo.Api.Extensions;
+using TicTacFoo.Application;
+using TicTacFoo.Application.Common.Extensions;
+using TicTacFoo.Infrastructure;
 
 namespace TicTacFoo.Api
 {
@@ -25,6 +27,10 @@ namespace TicTacFoo.Api
                 .AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
             
+            services.AddApplication();
+            services.AddInfrastructure();
+            services.AddServicesByAttribute();
+
             services.Configure<GzipCompressionProviderOptions>(options =>
             {
                 options.Level = CompressionLevel.Optimal;
@@ -37,7 +43,6 @@ namespace TicTacFoo.Api
             });
             services.AddCors();
             services.AddHttpContextAccessor();
-            services.AddServicesByAttribute();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
