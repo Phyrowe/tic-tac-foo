@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TicTacFoo.Application;
 using TicTacFoo.Application.Common.Extensions;
+using TicTacFoo.Application.Hubs;
 using TicTacFoo.Infrastructure;
 
 namespace TicTacFoo.Api
@@ -30,6 +31,7 @@ namespace TicTacFoo.Api
             services.AddApplication();
             services.AddInfrastructure();
             services.AddServicesByAttribute();
+            services.AddSignalR();
 
             services.Configure<GzipCompressionProviderOptions>(options =>
             {
@@ -52,20 +54,25 @@ namespace TicTacFoo.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseResponseCompression();
-            app.UseHttpsRedirection();
-            app.UseRouting();
             
             app.UseCors(x => x
-                .AllowAnyOrigin()
+                .WithOrigins("http://localhost:1234")
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .AllowCredentials());
+            
+            app.UseResponseCompression();
+            app.UseRouting();
+            
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<GameHub>("/game");
+            });
         }
     }
 }

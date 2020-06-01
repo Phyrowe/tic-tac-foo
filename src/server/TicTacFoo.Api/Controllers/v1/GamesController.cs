@@ -9,23 +9,25 @@ namespace TicTacFoo.Api.Controllers.v1
     [AllowAnonymous]
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class TestsController : ApiControllerBase
+    public class GamesController : ApiControllerBase
     {
-        private readonly ISampleService _sample;
+        private readonly IGameService _gameService;
+        private readonly IGameHub _gameHub;
 
-        public TestsController(ISampleService sample)
+        public GamesController(IGameService gameService, IGameHub gameHub)
         {
-            _sample = sample;
+            _gameService = gameService;
+            _gameHub = gameHub;
         }
 
-        [AllowAnonymous]
+
         [HttpGet]
         [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
         public async Task<IActionResult> Index()
         {
             try
             {
-                return Ok(await Task.FromResult(new { Status = 200, Message = _sample.IsWorking() }));
+                return Ok(await Task.FromResult(new { Status = 200, Message = new string[3,3] }));
             }
             catch (Exception ex)
             {

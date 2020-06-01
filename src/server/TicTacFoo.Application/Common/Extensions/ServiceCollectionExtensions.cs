@@ -52,12 +52,16 @@ namespace TicTacFoo.Application.Common.Extensions
                         throw new Exception(
                             $"Failed to resolve interface for class {implementationType.Name}, unable to inject dependency!");
 
-                    if (injectableAttribute == typeof(TransientAttribute))
-                        services.AddTransient(interfaceType, implementationType);
-                    else if (injectableAttribute == typeof(ScopedAttribute))
-                        services.AddScoped(interfaceType, implementationType);
-                    else if (injectableAttribute == typeof(SingletonAttribute))
-                        services.AddSingleton(interfaceType, implementationType);
+                    services = injectableAttribute switch
+                    {
+                        {} t when t == typeof(TransientAttribute) =>
+                            services.AddTransient(interfaceType, implementationType),
+                        {} t when t == typeof(ScopedAttribute) =>
+                            services.AddScoped(interfaceType, implementationType),
+                        {} t when t == typeof(SingletonAttribute) =>
+                            services.AddSingleton(interfaceType, implementationType),
+                        _ => services
+                    };
                 }
             }
         }
