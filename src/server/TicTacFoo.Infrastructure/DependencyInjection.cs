@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using TicTacFoo.Infrastructure.Persistence;
 
 namespace TicTacFoo.Infrastructure
 {
@@ -6,6 +8,9 @@ namespace TicTacFoo.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase(nameof(TicTacFoo)));
+            
             return services;
         }
     }
