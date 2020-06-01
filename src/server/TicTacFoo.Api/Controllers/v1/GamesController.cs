@@ -12,12 +12,14 @@ namespace TicTacFoo.Api.Controllers.v1
     public class GamesController : ApiControllerBase
     {
         private readonly IGameService _gameService;
+        private readonly IPlayerService _playerService;
         private readonly IGameHub _gameHub;
 
-        public GamesController(IGameService gameService, IGameHub gameHub)
+        public GamesController(IGameService gameService, IGameHub gameHub, IPlayerService playerService)
         {
             _gameService = gameService;
             _gameHub = gameHub;
+            _playerService = playerService;
         }
 
 
@@ -27,7 +29,7 @@ namespace TicTacFoo.Api.Controllers.v1
         {
             try
             {
-                return Ok(await Task.FromResult(new { Status = 200, Message = new string[3,3] }));
+                return Ok(await Task.FromResult(new { Status = 200, Message = _playerService.Get() }));
             }
             catch (Exception ex)
             {
