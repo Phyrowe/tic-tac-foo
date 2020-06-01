@@ -42,10 +42,10 @@ namespace TicTacFoo.Application.Services
             await _context.Clients.Group(group.ToString()).SendAsync(method, GetAvailable());
         }
 
-        public void Create()
+        public void Create(string[] pieces)
         {
             string id = Guid.NewGuid().ToString("d");
-            if(!_games.TryAdd(id, new Game(id)))
+            if(!_games.TryAdd(id, new Game(id, pieces)))
                 throw new InvalidOperationException($"Could not add game with id {id}");
         }
         

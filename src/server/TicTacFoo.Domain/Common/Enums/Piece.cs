@@ -2,6 +2,7 @@
 {
     public enum Piece
     {
+        None,
         X,
         O
     }

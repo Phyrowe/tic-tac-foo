@@ -12,7 +12,7 @@ namespace TicTacFoo.Application.Common.Interfaces
         ConcurrentDictionary<string, Game> Get();
         IDictionary<string, Game> GetAvailable();
         Task SendAvailableAsync(string method, HubGroup group);
-        void Create();
+        void Create(string[] pieces);
         void Remove(string id);
         bool IsFilled();
     }
