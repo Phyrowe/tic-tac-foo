@@ -1,8 +1,8 @@
 ﻿namespace TicTacFoo.Domain.Common.Enums
 {
-    public enum HubGroup
+    public enum Piece
     {
-        Players,
-        Games
+        X,
+        O
     }
 }

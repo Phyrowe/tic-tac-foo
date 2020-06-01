@@ -5,11 +5,10 @@ using TicTacFoo.Domain.Common.Models;
 
 namespace TicTacFoo.Application.Common.Interfaces
 {
-    public interface IGameService : IBaseService
+    public interface IPlayerService : IBaseService
     {
-        ConcurrentDictionary<string, Game> Get();
+        ConcurrentDictionary<string, Player> Get();
         void Create(HubCallerContext context);
         void Remove(HubCallerContext context);
-        Task<bool> IsFilled();
     }
 }
