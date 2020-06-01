@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using TicTacFoo.Application.Common.Attributes;
 using TicTacFoo.Application.Common.Interfaces;
@@ -28,25 +27,22 @@ namespace TicTacFoo.Application.Services
             return _games;
         }
 
-        public void Create(HubCallerContext context)
+        public void Create()
         {
-            if (string.IsNullOrEmpty(context.ConnectionId))
-                throw new NullReferenceException("Connection cannot be null or empty");
-            if(!_games.TryAdd(context.ConnectionId, new Game(context.ConnectionId)))
-                throw new InvalidOperationException($"Could not add game with id {context.ConnectionId}");
+            string id = Guid.NewGuid().ToString("d");
+            if(!_games.TryAdd(id, new Game(id)))
+                throw new InvalidOperationException($"Could not add game with id {id}");
         }
         
-        public void Remove(HubCallerContext context)
+        public void Remove(string id)
         {
-            if (string.IsNullOrEmpty(context.ConnectionId))
-                throw new NullReferenceException("Connection cannot be null or empty");
-            if(!_games.TryRemove(context.ConnectionId, out Game game))
-                throw new InvalidOperationException($"Could not find game with id {context.ConnectionId}");
+            if(!_games.TryRemove(id, out Game game))
+                throw new InvalidOperationException($"Could not find game with id {id}");
         }
 
-        public async Task<bool> IsFilled()
+        public bool IsFilled()
         {
-            return await Task.FromResult(false);
+            return false;
         }
     }
 }

@@ -8,7 +8,7 @@ using TicTacFoo.Domain.Common.Enums;
 namespace TicTacFoo.Application.Hubs
 {
     [Singleton]
-    public class GameHub : Hub, IGameHub
+    public class GameHub : Hub<IGameHub>, IGameHub
     {
         private readonly IHubContext<GameHub> _context;
         private readonly IGameService _gameService;
@@ -25,7 +25,7 @@ namespace TicTacFoo.Application.Hubs
         {
             try
             {
-                await _playerService.AddSession(Context, HubGroup.Players);
+                await _playerService.AddSessionAsync(Context, HubGroup.Players);
             }
             catch (Exception e)
             {
@@ -46,12 +46,13 @@ namespace TicTacFoo.Application.Hubs
             }
         }
 
-        [HubMethodName("update")]
-        public async Task Update()
+        [HubMethodName("create")]
+        public async Task Create()
         {
             try
             {
-                await _context.Clients.Group(nameof(HubGroup.Players)).SendAsync("update", ":)");
+                _gameService.Create();
+                await Task.CompletedTask;
             }
             catch (Exception e)
             {
