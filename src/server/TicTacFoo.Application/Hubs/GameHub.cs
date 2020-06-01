@@ -26,6 +26,7 @@ namespace TicTacFoo.Application.Hubs
             try
             {
                 await _playerService.AddSessionAsync(Context, HubGroup.Players);
+                await SendAvailablePlayers();
             }
             catch (Exception e)
             {
@@ -52,7 +53,33 @@ namespace TicTacFoo.Application.Hubs
             try
             {
                 _gameService.Create();
-                await Task.CompletedTask;
+                await SendAvailableGames();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        
+        [HubMethodName("getAvailableGames")]
+        public async Task SendAvailableGames()
+        {
+            try
+            {
+                await _gameService.SendAvailableAsync("getAvailableGames", HubGroup.Players);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        
+        [HubMethodName("getAvailablePlayers")]
+        public async Task SendAvailablePlayers()
+        {
+            try
+            {
+                await _gameService.SendAvailableAsync("getAvailableGames", HubGroup.Players);
             }
             catch (Exception e)
             {
