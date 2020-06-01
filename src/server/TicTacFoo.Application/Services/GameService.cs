@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using TicTacFoo.Application.Common.Attributes;
 using TicTacFoo.Application.Common.Interfaces;
 using TicTacFoo.Application.Hubs;
+using TicTacFoo.Domain.Common.Enums;
 using TicTacFoo.Domain.Common.Models;
 
 namespace TicTacFoo.Application.Services
@@ -25,6 +29,17 @@ namespace TicTacFoo.Application.Services
         public ConcurrentDictionary<string, Game> Get()
         {
             return _games;
+        }
+
+        public IDictionary<string, Game> GetAvailable()
+        {
+            return _games.Where(g => g.Value.IsOver == false)
+                .ToDictionary(g => g.Key, g => g.Value);
+        }
+
+        public async Task SendAvailableAsync(string method, HubGroup group)
+        {
+            await _context.Clients.Group(group.ToString()).SendAsync(method, GetAvailable());
         }
 
         public void Create()
