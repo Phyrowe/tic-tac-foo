@@ -4,6 +4,6 @@ namespace TicTacFoo.Application.Common.Interfaces
 {
     public interface IGameHub
     {
-        Task Update();
+        Task Create();
     }
 }

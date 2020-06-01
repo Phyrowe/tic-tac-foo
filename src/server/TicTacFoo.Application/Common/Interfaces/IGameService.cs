@@ -8,8 +8,8 @@ namespace TicTacFoo.Application.Common.Interfaces
     public interface IGameService : IBaseService
     {
         ConcurrentDictionary<string, Game> Get();
-        void Create(HubCallerContext context);
-        void Remove(HubCallerContext context);
-        Task<bool> IsFilled();
+        void Create();
+        void Remove(string id);
+        bool IsFilled();
     }
 }

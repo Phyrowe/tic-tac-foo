@@ -29,7 +29,11 @@ namespace TicTacFoo.Api.Controllers.v1
         {
             try
             {
-                return Ok(await Task.FromResult(new { Status = 200, Message = _playerService.Get() }));
+                return Ok(await Task.FromResult(new
+                    {
+                        Players = _playerService.Get(),
+                        Games = _gameService.Get()
+                    }));
             }
             catch (Exception ex)
             {

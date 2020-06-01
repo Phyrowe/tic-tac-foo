@@ -43,10 +43,10 @@ namespace TicTacFoo.Application.Services
                 throw new InvalidOperationException($"Could not find player with id {context.ConnectionId}");
         }
 
-        public override Task AddSession(HubCallerContext context, HubGroup group)
+        public override Task AddSessionAsync(HubCallerContext context, HubGroup group)
         {
             Create(context);
-            return base.AddSession(context, group);
+            return base.AddSessionAsync(context, group);
         }
     }
 }
