@@ -1,4 +1,5 @@
 using System.IO.Compression;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -26,8 +27,11 @@ namespace TicTacFoo.Api
         {
             services
                 .AddControllers()
-                .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
-            
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                });
             services.AddApplication();
             services.AddInfrastructure();
             services.AddServicesByAttribute();

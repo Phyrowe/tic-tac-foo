@@ -52,7 +52,8 @@ namespace TicTacFoo.Application.Hubs
         {
             try
             {
-                _gameService.Create();
+                // TODO: Remove hardcoded game board size.
+                _gameService.Create(new string[9]);
                 await SendAvailableGames();
             }
             catch (Exception e)
@@ -79,7 +80,7 @@ namespace TicTacFoo.Application.Hubs
         {
             try
             {
-                await _gameService.SendAvailableAsync("getAvailableGames", HubGroup.Players);
+                await _playerService.SendAvailableAsync("getAvailablePlayers", HubGroup.Players);
             }
             catch (Exception e)
             {
