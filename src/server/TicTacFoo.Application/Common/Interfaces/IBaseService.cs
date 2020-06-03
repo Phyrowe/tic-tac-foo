@@ -7,5 +7,6 @@ namespace TicTacFoo.Application.Common.Interfaces
     public interface IBaseService
     {
         Task AddSessionAsync(HubCallerContext context, HubGroup group);
+        Task AddSessionAsync(HubCallerContext context, HubGroup group, string optional);
     }
 }
