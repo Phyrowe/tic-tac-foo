@@ -13,7 +13,7 @@ namespace TicTacFoo.Application.Services
     {
         private readonly IHubContext<GameHub> _context;
 
-        public GameLogicService(IHubContext<GameHub> context, IPlayerService playerService) : base(context)
+        public GameLogicService(IHubContext<GameHub> context) : base(context)
         {
             _context = context;
         }
