@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using TicTacFoo.Application.Common.Attributes;
+using TicTacFoo.Application.Common.Extensions;
 using TicTacFoo.Application.Common.Interfaces;
 using TicTacFoo.Application.Hubs;
 using TicTacFoo.Domain.Common.Enums;
@@ -23,9 +24,19 @@ namespace TicTacFoo.Application.Services
         
         public bool IsFilled(Piece[] board) => !board.Contains(Piece.None);
 
-        public bool IsGameOver(Game game)
+        public bool IsGameOver(Game game) => IsGameOver(game.Board);
+
+        public bool IsGameOver(Piece[] board)
         {
-            throw new NotImplementedException();
+            if (IsFilled(board))
+                return true;
+            
+            // Calculate board width
+            int width = (int)Math.Sqrt(9);
+            board.ToMultiDimensional(width);
+            
+            // TODO: Implement game over checks.
+            return false;
         }
 
         public bool IsValidMove(Game game,uint index)
