@@ -62,7 +62,7 @@ namespace TicTacFoo.Application.Services
                 throw new InvalidOperationException($"Could not add game with id {id}");
         }
         
-        public async Task Create(HubCallerContext context, Piece[] board)
+        public async Task CreateAsync(HubCallerContext context, Piece[] board)
         {
             string id = Guid.NewGuid().ToString("d");
             if(!_games.TryAdd(id, new Game(id, board, context.ConnectionId)))
@@ -70,7 +70,7 @@ namespace TicTacFoo.Application.Services
             await AddSessionAsync(context, HubGroup.Games, id);
         }
         
-        public async Task Join(HubCallerContext context, string gameId)
+        public async Task JoinAsync(HubCallerContext context, string gameId)
         {
             if (!_games.TryGetValue(gameId, out Game game))
                 throw new NullReferenceException($"Could not find game with id {gameId}");
@@ -79,15 +79,15 @@ namespace TicTacFoo.Application.Services
             // We clone the game for comparision :)
             var clone = game.DeepClone();
             // Then we update the player id :)
-            for (int i = 0; i <= game.Players.Length; i++)
+            for (int i = 0; i < clone.Players.Length; i++)
             {
                 if (string.IsNullOrEmpty(game.Players[i]))
                 {
-                    game.Players[i] = context.ConnectionId;
+                    clone.Players[i] = context.ConnectionId;
                     break;
                 }
             }
-            if(!_games.TryUpdate(gameId, game, clone))
+            if(!_games.TryUpdate(gameId, clone, game))
                 throw new InvalidOperationException($"Could not update game with id {gameId}");
             await AddSessionAsync(context, HubGroup.Games, gameId);
             await SendGameAsync(HubGroup.Games, gameId);
