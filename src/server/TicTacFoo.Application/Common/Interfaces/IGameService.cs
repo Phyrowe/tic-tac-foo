@@ -15,8 +15,8 @@ namespace TicTacFoo.Application.Common.Interfaces
         Task SendAvailableAsync(string method, HubGroup group);
         Task SendGameAsync(HubGroup group, string id);
         void Create(Piece[] board);
-        Task Create(HubCallerContext context, Piece[] board);
-        Task Join(HubCallerContext context, string gameId);
+        Task CreateAsync(HubCallerContext context, Piece[] board);
+        Task JoinAsync(HubCallerContext context, string gameId);
         void Remove(string id);
         bool IsFilled();
     }
