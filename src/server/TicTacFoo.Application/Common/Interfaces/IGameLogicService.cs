@@ -12,7 +12,7 @@ namespace TicTacFoo.Application.Common.Interfaces
         bool IsFilled(Game game);
         bool IsFilled(Piece[] board);
         bool IsGameOver(Game game);
-        bool IsValidMove(Game game, Piece piece, int position);
-        bool IsValidMove(Piece[] board, Piece piece, int position);
+        bool IsValidMove(Game game, uint index);
+        bool IsValidMove(Piece[] board, uint index);
     }
 }

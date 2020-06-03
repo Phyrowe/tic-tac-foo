@@ -20,6 +20,7 @@ namespace TicTacFoo.Application.Services
         }
 
         public bool IsFilled(Game game) => IsFilled(game.Board);
+        
         public bool IsFilled(Piece[] board) => !board.Contains(Piece.None);
 
         public bool IsGameOver(Game game)
@@ -27,14 +28,16 @@ namespace TicTacFoo.Application.Services
             throw new NotImplementedException();
         }
 
-        public bool IsValidMove(Game game, Piece piece, int position)
-        {
-            throw new NotImplementedException();
-        }
+        public bool IsValidMove(Game game,uint index)
+            => IsValidMove(game.Board, index);
 
-        public bool IsValidMove(Piece[] board, Piece piece, int position)
+        public bool IsValidMove(Piece[] board, uint index)
         {
-            throw new NotImplementedException();
+            if (index >= board.Length)
+                return false;
+            if (board[index] != Piece.None)
+                return false;
+            return true;
         }
     }
 }
