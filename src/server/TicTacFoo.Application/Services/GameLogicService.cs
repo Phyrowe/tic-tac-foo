@@ -32,8 +32,8 @@ namespace TicTacFoo.Application.Services
                 return true;
             
             // Calculate board width
-            int width = (int)Math.Sqrt(9);
-            board.ToMultiDimensional(width);
+            int width = (int)Math.Sqrt(board.Length);
+            Piece[,] gameBoard = board.ToMultiDimensional(width);
             
             // TODO: Implement game over checks.
             return false;
