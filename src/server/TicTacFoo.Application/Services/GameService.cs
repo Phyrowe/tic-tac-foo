@@ -108,10 +108,5 @@ namespace TicTacFoo.Application.Services
             if(!_games.TryRemove(id, out Game game))
                 throw new InvalidOperationException($"Could not find game with id {id}");
         }
-
-        public bool IsFilled()
-        {
-            return false;
-        }
     }
 }
