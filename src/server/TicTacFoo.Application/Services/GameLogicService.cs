@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using TicTacFoo.Application.Common.Attributes;
 using TicTacFoo.Application.Common.Interfaces;
@@ -18,10 +19,8 @@ namespace TicTacFoo.Application.Services
             _context = context;
         }
 
-        public bool IsFilled(Game game)
-        {
-            throw new NotImplementedException();
-        }
+        public bool IsFilled(Game game) => IsFilled(game.Board);
+        public bool IsFilled(Piece[] board) => !board.Contains(Piece.None);
 
         public bool IsGameOver(Game game)
         {
