@@ -48,6 +48,19 @@ namespace TicTacFoo.Application.Hubs
                 throw e;
             }
         }
+        
+        [HubMethodName("games/id")]
+        public async Task Get(string gameId)
+        {
+            try
+            {
+                await _gameService.SendGameAsync(HubGroup.Games, gameId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         [HubMethodName("games/create")]
         public async Task Create()

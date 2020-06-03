@@ -81,7 +81,7 @@ namespace TicTacFoo.Application.Services
             // Then we update the player id :)
             for (int i = 0; i <= game.Players.Length; i++)
             {
-                if (game.Players[i] == null)
+                if (string.IsNullOrEmpty(game.Players[i]))
                 {
                     game.Players[i] = context.ConnectionId;
                     break;
