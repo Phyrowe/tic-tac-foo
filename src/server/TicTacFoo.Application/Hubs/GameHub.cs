@@ -26,7 +26,8 @@ namespace TicTacFoo.Application.Hubs
             try
             {
                 await _playerService.AddSessionAsync(Context, HubGroup.Players);
-                await SendAvailablePlayers();
+                await SendPlayersAvailable();
+                await SendGamesAvailable();
             }
             catch (Exception e)
             {
@@ -34,12 +35,13 @@ namespace TicTacFoo.Application.Hubs
             }
         }
 
-        public override Task OnDisconnectedAsync(Exception exception)
+        public override async Task OnDisconnectedAsync(Exception exception)
         {
             try
             {
                 _playerService.Remove(Context);
-                return base.OnDisconnectedAsync(exception);
+                await SendPlayersAvailable();
+                await base.OnDisconnectedAsync(exception);
             }
             catch (Exception e)
             {
@@ -47,14 +49,14 @@ namespace TicTacFoo.Application.Hubs
             }
         }
 
-        [HubMethodName("create")]
+        [HubMethodName("games/create")]
         public async Task Create()
         {
             try
             {
                 // TODO: Remove hardcoded game board size.
-                _gameService.Create(new string[9]);
-                await SendAvailableGames();
+                await _gameService.Create(Context, new Piece[9]);
+                await SendGamesAvailable();
             }
             catch (Exception e)
             {
@@ -62,12 +64,14 @@ namespace TicTacFoo.Application.Hubs
             }
         }
         
-        [HubMethodName("getAvailableGames")]
-        public async Task SendAvailableGames()
+        [HubMethodName("games/join")]
+        public async Task Join(string gameId)
         {
             try
             {
-                await _gameService.SendAvailableAsync("getAvailableGames", HubGroup.Players);
+                // Join game
+                await _gameService.Join(Context, gameId);
+                await SendGamesAvailable();
             }
             catch (Exception e)
             {
@@ -75,12 +79,25 @@ namespace TicTacFoo.Application.Hubs
             }
         }
         
-        [HubMethodName("getAvailablePlayers")]
-        public async Task SendAvailablePlayers()
+        [HubMethodName("games/available")]
+        public async Task SendGamesAvailable()
         {
             try
             {
-                await _playerService.SendAvailableAsync("getAvailablePlayers", HubGroup.Players);
+                await _gameService.SendAvailableAsync("games/available", HubGroup.Players);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        
+        [HubMethodName("players/available")]
+        public async Task SendPlayersAvailable()
+        {
+            try
+            {
+                await _playerService.SendAvailableAsync("players/available", HubGroup.Players);
             }
             catch (Exception e)
             {

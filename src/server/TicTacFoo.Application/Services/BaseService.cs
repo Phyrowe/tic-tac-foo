@@ -14,9 +14,14 @@ namespace TicTacFoo.Application.Services
             _context = context;
         }
 
-        public async virtual Task AddSessionAsync(HubCallerContext context, HubGroup group)
+        public virtual async Task AddSessionAsync(HubCallerContext context, HubGroup group)
         {
             await _context.Groups.AddToGroupAsync(context.ConnectionId, group.ToString());
+        }
+        
+        public virtual async Task AddSessionAsync(HubCallerContext context, HubGroup group, string subGroup)
+        {
+            await _context.Groups.AddToGroupAsync(context.ConnectionId, $"{group.ToString()}/{subGroup}");
         }
     }
 }
