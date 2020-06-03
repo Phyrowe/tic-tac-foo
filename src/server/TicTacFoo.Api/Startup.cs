@@ -35,7 +35,11 @@ namespace TicTacFoo.Api
             services.AddApplication();
             services.AddInfrastructure();
             services.AddServicesByAttribute();
-            services.AddSignalR();
+            services.AddSignalR()
+                .AddJsonProtocol(options =>
+                {
+                    options.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
 
             services.Configure<GzipCompressionProviderOptions>(options =>
             {

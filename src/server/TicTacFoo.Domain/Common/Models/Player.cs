@@ -11,7 +11,6 @@ namespace TicTacFoo.Domain.Common.Models
         public string Id { get; set; }
 
         public string Name { get; set; }
-
         public string GameId { get; set; }
 
         public Piece Piece { get; set; }

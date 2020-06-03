@@ -10,9 +10,13 @@ namespace TicTacFoo.Application.Common.Interfaces
     public interface IGameService : IBaseService
     {
         ConcurrentDictionary<string, Game> Get();
+        Game Get(string id);
         IDictionary<string, Game> GetAvailable();
         Task SendAvailableAsync(string method, HubGroup group);
-        void Create(string[] pieces);
+        Task SendGameAsync(HubGroup group, string id);
+        void Create(Piece[] board);
+        Task Create(HubCallerContext context, Piece[] board);
+        Task Join(HubCallerContext context, string gameId);
         void Remove(string id);
         bool IsFilled();
     }
