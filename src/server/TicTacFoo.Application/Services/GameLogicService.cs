@@ -35,9 +35,7 @@ namespace TicTacFoo.Application.Services
         {
             if (index >= board.Length)
                 return false;
-            if (board[index] != Piece.None)
-                return false;
-            return true;
+            return board[index] == Piece.None;
         }
     }
 }
