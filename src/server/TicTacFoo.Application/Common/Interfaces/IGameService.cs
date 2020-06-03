@@ -18,6 +18,5 @@ namespace TicTacFoo.Application.Common.Interfaces
         Task CreateAsync(HubCallerContext context, Piece[] board);
         Task JoinAsync(HubCallerContext context, string gameId);
         void Remove(string id);
-        bool IsFilled();
     }
 }

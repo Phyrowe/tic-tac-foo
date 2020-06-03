@@ -21,6 +21,6 @@ namespace TicTacFoo.Domain.Common.Models
         public string Name { get; set; }
         public string[] Players { get; set; }
         public Piece[] Board { get; set; }
-        public bool IsFinished { get; set; }
+        public bool IsGameOver { get; set; }
     }
 }

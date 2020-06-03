@@ -17,13 +17,15 @@ namespace TicTacFoo.Application.Services
     public class GameService : BaseService<GameHub>, IGameService
     {
         private readonly IPlayerService _playerService;
+        private readonly IGameLogicService _gameLogicService;
         private readonly IHubContext<GameHub> _context;
         private readonly ConcurrentDictionary<string, Game> _games;
         
-        public GameService(IHubContext<GameHub> context, IPlayerService playerService) : base(context)
+        public GameService(IHubContext<GameHub> context, IPlayerService playerService, IGameLogicService gameLogicService) : base(context)
         {
             _context = context;
             _playerService = playerService;
+            _gameLogicService = gameLogicService;
             _games = new ConcurrentDictionary<string, Game>();
         }
 
@@ -41,7 +43,7 @@ namespace TicTacFoo.Application.Services
 
         public IDictionary<string, Game> GetAvailable()
         {
-            return _games.Where(g => g.Value.IsFinished == false)
+            return _games.Where(g => g.Value.IsGameOver == false)
                 .ToDictionary(g => g.Key, g => g.Value);
         }
 
@@ -81,7 +83,7 @@ namespace TicTacFoo.Application.Services
             // Then we update the player id :)
             for (int i = 0; i < clone.Players.Length; i++)
             {
-                if (string.IsNullOrEmpty(game.Players[i]))
+                if (string.IsNullOrEmpty(clone.Players[i]))
                 {
                     clone.Players[i] = context.ConnectionId;
                     break;
@@ -90,6 +92,14 @@ namespace TicTacFoo.Application.Services
             if(!_games.TryUpdate(gameId, clone, game))
                 throw new InvalidOperationException($"Could not update game with id {gameId}");
             await AddSessionAsync(context, HubGroup.Games, gameId);
+            await SendGameAsync(HubGroup.Games, gameId);
+        }
+        
+        public async Task PlacePieceAsync(string gameId, int position)
+        {
+            if (!_games.TryGetValue(gameId, out Game game))
+                throw new NullReferenceException($"Could not get game with id {gameId}");
+            
             await SendGameAsync(HubGroup.Games, gameId);
         }
         
