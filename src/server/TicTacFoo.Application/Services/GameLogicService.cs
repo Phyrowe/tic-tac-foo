@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using TicTacFoo.Application.Common.Attributes;
 using TicTacFoo.Application.Common.Interfaces;
@@ -18,24 +19,23 @@ namespace TicTacFoo.Application.Services
             _context = context;
         }
 
-        public bool IsFilled(Game game)
-        {
-            throw new NotImplementedException();
-        }
+        public bool IsFilled(Game game) => IsFilled(game.Board);
+        
+        public bool IsFilled(Piece[] board) => !board.Contains(Piece.None);
 
         public bool IsGameOver(Game game)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsValidMove(Game game, Piece piece, int position)
-        {
-            throw new NotImplementedException();
-        }
+        public bool IsValidMove(Game game,uint index)
+            => IsValidMove(game.Board, index);
 
-        public bool IsValidMove(Piece[] board, Piece piece, int position)
+        public bool IsValidMove(Piece[] board, uint index)
         {
-            throw new NotImplementedException();
+            if (index >= board.Length)
+                return false;
+            return board[index] == Piece.None;
         }
     }
 }
