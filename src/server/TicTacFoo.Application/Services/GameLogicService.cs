@@ -30,13 +30,69 @@ namespace TicTacFoo.Application.Services
         {
             if (IsFilled(board))
                 return true;
-            
-            // Calculate board width
+            return GetWinner(board) != Piece.None;
+        }
+        
+        public Piece GetWinner(Game game) => GetWinner(game.Board);
+
+        public Piece GetWinner(Piece[] board)
+        {
             int width = (int)Math.Sqrt(board.Length);
-            Piece[,] gameBoard = board.ToMultiDimensional(width);
+            var gameBoard = board.ToMultiDimensional(width);
             
-            // TODO: Implement game over checks.
-            return false;
+            Piece winner = Piece.None;
+            Piece currentPiece = Piece.None;
+            
+            for (int i = 0, r = 0; i < gameBoard.Length; i++)
+            {
+                if (i < width)
+                {
+                    // Check every row horizontally if has matching pieces
+                    currentPiece = gameBoard[0, i];
+                    for (int row = 0, rewind = width - 1; row < width; row++, rewind--)
+                    {
+                        if (gameBoard[row, i] == currentPiece && currentPiece != Piece.None)
+                        {
+                            winner = gameBoard[row, i];
+                            continue;
+                        }
+                        // Check diagonal from left
+                        if (gameBoard[row, row] == currentPiece && currentPiece != Piece.None)
+                        {
+                            winner = gameBoard[row, row];
+                            continue;
+                        }
+                        // Check diagonal from right
+                        Piece last = gameBoard[width - 1, i];
+                        if (gameBoard[row, rewind] == last && last != Piece.None)
+                        {
+                            winner = gameBoard[row, rewind];
+                            continue;
+                        }
+                        winner = Piece.None;
+                        break;
+                    }
+                    if (winner != Piece.None) break;
+                }
+                if (i % width == 0)
+                {
+                    // Check every row vertically if has matching pieces
+                    currentPiece = gameBoard[r, 0];
+                    for (int column = 0; column < width; column++)
+                    {
+                        if (gameBoard[r, column] == currentPiece && currentPiece != Piece.None)
+                        {
+                            winner = gameBoard[r, column];
+                            continue;
+                        }
+                        winner = Piece.None;
+                        break;
+                    }
+                    if (winner != Piece.None) break;
+                    r++;
+                }
+            }
+            return winner;
         }
 
         public bool IsValidMove(Game game,uint index)
