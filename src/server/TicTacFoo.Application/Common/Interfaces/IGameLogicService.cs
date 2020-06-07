@@ -9,6 +9,8 @@ namespace TicTacFoo.Application.Common.Interfaces
 {
     public interface IGameLogicService : IBaseService
     {
+        Piece GetWinner(Game game);
+        Piece GetWinner(Piece[] board);
         bool IsFilled(Game game);
         bool IsFilled(Piece[] board);
         bool IsGameOver(Game game);
