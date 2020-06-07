@@ -49,21 +49,33 @@ namespace TicTacFoo.Application.Services
                 {
                     // Check every row horizontally if has matching pieces
                     currentPiece = gameBoard[0, i];
-                    for (int row = 0, rewind = width - 1; row < width; row++, rewind--)
+                    for (int row = 0; row < width; row++)
                     {
                         if (gameBoard[row, i] == currentPiece && currentPiece != Piece.None)
                         {
                             winner = gameBoard[row, i];
                             continue;
                         }
-                        // Check diagonal from left
+                        winner = Piece.None;
+                        break;
+                    }
+                    if (winner != Piece.None) break;
+                    // Check diagonal from left
+                    for (int row = 0; row < width; row++)
+                    {
                         if (gameBoard[row, row] == currentPiece && currentPiece != Piece.None)
                         {
                             winner = gameBoard[row, row];
                             continue;
                         }
-                        // Check diagonal from right
-                        Piece last = gameBoard[width - 1, i];
+                        winner = Piece.None;
+                        break;
+                    }
+                    if (winner != Piece.None) break;
+                    // Check diagonal from right
+                    Piece last = gameBoard[width - 1, i];
+                    for (int row = 0, rewind = width - 1; row < width; row++, rewind--)
+                    {
                         if (gameBoard[row, rewind] == last && last != Piece.None)
                         {
                             winner = gameBoard[row, rewind];
