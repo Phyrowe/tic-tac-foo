@@ -63,12 +63,12 @@ namespace TicTacFoo.Application.Hubs
         }
 
         [HubMethodName("games/create")]
-        public async Task Create()
+        public async Task Create(int width)
         {
             try
             {
-                // TODO: Remove hardcoded game board size.
-                await _gameService.CreateAsync(Context, new Piece[9]);
+                if (width < 3) width = 3;
+                await _gameService.CreateAsync(Context, new Piece[width * width]);
                 await SendGamesAvailable();
             }
             catch (Exception e)
