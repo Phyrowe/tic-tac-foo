@@ -1,16 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import m from "mithril";
+import {appSettings} from "./settings/appSettings";
 import {App} from './components/App';
-import * as serviceWorker from './serviceWorker';
+import {appState} from './application/state/appState';
+import {appActions} from './application/actions/appActions';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const root  = document.body;
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+m.route.prefix = appSettings.routing.prefix
+m.render(root, <App 
+    state={appState} 
+    actions={appActions} 
+    settings={appSettings}>404 Not found
+</App>)
