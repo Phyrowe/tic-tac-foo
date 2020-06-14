@@ -1,11 +1,10 @@
 import m from 'mithril';
 import {appRoutes} from '../appRoutes';
 import {connectSignalRHub} from '../application/hub/signalr';
-import {compose} from 'lodash/fp';
 
 export const App = () => ({
-    oncreate: ({attrs: {settings, state, actions}, dom}) => {
-        compose(actions.setHub, connectSignalRHub)(settings.hub.url);
+    oncreate: async ({attrs: {settings, state, actions}, dom}) => {
+        actions.setHub(await connectSignalRHub(settings.hub.url));
         m.route.prefix = settings.routing.prefix;
         m.route(dom, settings.routing.rootPath, appRoutes(state, actions));
     },

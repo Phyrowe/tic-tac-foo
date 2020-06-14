@@ -11,9 +11,10 @@ const build = (url, logLevel) => {
 
 const start = async (hub) => {
     try {
-        if(hub.state === signalR.HubConnectionState.Connected) 
+        if(hub.state === signalR.HubConnectionState.Connected)
             return hub;
         await hub.start();
+        return hub;
     } catch (e) {
         console.error(e);
         setTimeout(async () => await start(hub), 6000);
@@ -21,25 +22,24 @@ const start = async (hub) => {
 }
 
 const reconnectPolicy = () => {
-        return { 
-            nextRetryDelayInMilliseconds: (retryContext) => {
-                if (retryContext.elapsedMilliseconds < 60000) {
-                    // If we've been reconnecting for less than 60 seconds so far,
-                    // wait between 0 and 10 seconds before the next reconnect attempt.
-                    return Math.random() * 10000;
-                } else {
-                    // If we've been reconnecting for more than 60 seconds so far, stop reconnecting.
-                    console.error("Signalr hub connection failed.");
-                    return null;
-                }
+    return {
+        nextRetryDelayInMilliseconds: (retryContext) => {
+            if (retryContext.elapsedMilliseconds < 60000) {
+                // If we've been reconnecting for less than 60 seconds so far,
+                // wait between 0 and 10 seconds before the next reconnect attempt.
+                return Math.random() * 10000;
+            } else {
+                // If we've been reconnecting for more than 60 seconds so far, stop reconnecting.
+                console.error("Signalr hub connection failed.");
+                return null;
             }
         }
+    }
 }
 
 export const connectSignalRHub = async (url, logLevel = signalR.LogLevel.Debug) => {
     try {
-        console.log(url)
-        compose((await start), build)(url, logLevel);
+        return compose(await start, build)(url, logLevel);
     } catch (e) {
         console.log(e);
     }
