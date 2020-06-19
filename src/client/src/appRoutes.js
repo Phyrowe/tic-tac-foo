@@ -1,9 +1,9 @@
 import m from 'mithril';
-import {Test} from './components/Test';
+import Test from './components/Test';
 
-export const appRoutes = (state, actions) => ({
+export const appRoutes = () => ({
     '/': {
-        view: () => <Test state={state} actions={actions} />
+        view: () => <Test />
     },
     '/game/:id': {
         view: ({attrs: {id}}) => <h1>Game {id}</h1>
