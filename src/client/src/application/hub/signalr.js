@@ -1,5 +1,6 @@
 import * as signalR from '@microsoft/signalr';
 import {compose} from 'lodash/fp';
+import {appSettings} from '../../settings/appSettings';
 
 const build = (url, logLevel) => {
     return new signalR.HubConnectionBuilder()
