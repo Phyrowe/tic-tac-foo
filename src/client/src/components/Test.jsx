@@ -1,14 +1,33 @@
 import m from 'mithril';
+import {compose} from 'lodash/fp';
+import {connect} from '../application/redux/store/connect';
+import {setHub} from "../application/redux/actions/game";
+import {withRedraw} from '../lib/withRedraw';
+
+const mapStateToAttr = state => ({
+    hub: state.game.hub
+})
+
+const mapDispatchToAttr = dispatch => ({
+    setHub: hub => compose(withRedraw, dispatch, setHub)(hub)
+})
 
 export const Test = ({
-    oninit: ({ attrs: { state, actions } }) => {
-        state.hub.on("games/available", data => {
-            console.log("games", data);
-        });
+    oncreate: ({ attrs: {hub, setHub} }) => {
     },
-    view: ({ attrs: { state, actions } }) => (
+    oninit: ({ attrs: {hub, setHub} }) => {
+    },
+    view: ({ attrs: {hub} }) => (
         <main>
-            <button onclick={() => state.hub.invoke("games/create", 10)}>Create</button>
+            <button className={'btn btn-blue'} >Create</button>
+            <div className={'grid-board'}>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+            </div>
         </main>
     )
 })
+
+export default connect(mapStateToAttr, mapDispatchToAttr)(Test);

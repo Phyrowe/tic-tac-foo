@@ -1,5 +1,6 @@
 import * as signalR from '@microsoft/signalr';
 import {compose} from 'lodash/fp';
+import {appSettings} from '../../settings/appSettings';
 
 const build = (url, logLevel) => {
     return new signalR.HubConnectionBuilder()
@@ -14,7 +15,7 @@ const start = async (hub) => {
         if(hub.state === signalR.HubConnectionState.Connected)
             return hub;
         await hub.start();
-        return hub;
+        return await hub;
     } catch (e) {
         console.error(e);
         setTimeout(async () => await start(hub), 6000);
