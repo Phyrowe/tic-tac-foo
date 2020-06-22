@@ -12,7 +12,7 @@ export const signalr = store => next => async action => {
     }
 
     const result = next(action);
-        // Signalr should not be connected if new connection
+    // Signalr should now be connected if new connection
 
     const {connection} = getState().hubs;
 
