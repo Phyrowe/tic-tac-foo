@@ -4,6 +4,5 @@ import m from 'mithril';
 export const redraw = store => next => action => {
     const result = next(action);
     m.redraw();
-    console.log("Rewdraw")
     return result;
 }
