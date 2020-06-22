@@ -1,9 +1,11 @@
 import {applyMiddleware, compose, createStore, combineReducers} from "redux";
 import {reducers} from '../reducers';
-import {signalRMiddleware} from '../middlewares/signalr';
+import {signalr} from '../middlewares/signalr';
+import {redraw} from '../middlewares/redraw';
 
 const middlewares = [
-    signalRMiddleware
+    redraw,
+    signalr
 ];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

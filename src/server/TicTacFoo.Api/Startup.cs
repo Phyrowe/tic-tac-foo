@@ -64,7 +64,7 @@ namespace TicTacFoo.Api
             }
             
             app.UseCors(x => x
-                .WithOrigins("http://localhost:1234")
+                .WithOrigins("http://localhost:8888")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());

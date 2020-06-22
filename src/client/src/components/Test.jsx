@@ -1,25 +1,24 @@
 import m from 'mithril';
 import {compose} from 'lodash/fp';
 import {connect} from '../application/redux/store/connect';
-import {setHub} from "../application/redux/actions/game";
-import {withRedraw} from '../lib/withRedraw';
+import {createGame} from "../application/redux/actions/games";
 
 const mapStateToAttr = state => ({
-    hub: state.game.hub
+    games: state.games.available
 })
 
 const mapDispatchToAttr = dispatch => ({
-    setHub: hub => compose(withRedraw, dispatch, setHub)(hub)
+    createGame: size => compose(dispatch, createGame)(size)
 })
 
 export const Test = ({
-    oncreate: ({ attrs: {hub, setHub} }) => {
+    oncreate: ({ attrs: {games} }) => {
     },
-    oninit: ({ attrs: {hub, setHub} }) => {
+    oninit: ({ attrs: {games} }) => {
     },
-    view: ({ attrs: {hub} }) => (
+    view: ({ attrs: {createGame} }) => (
         <main>
-            <button className={'btn btn-blue'} >Create</button>
+            <button className={'btn btn-blue'} onclick={() => createGame(10)} >Create</button>
             <div className={'grid-board'}>
                 <div>1</div>
                 <div>2</div>

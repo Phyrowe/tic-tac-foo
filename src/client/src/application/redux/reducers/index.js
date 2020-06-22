@@ -1,5 +1,10 @@
-import {game} from './game';
+import {games} from './games';
+import {hubs} from './hubs';
+import {players} from './players';
+
 
 export const reducers = {
-    game
+    games,
+    hubs,
+    players
 };

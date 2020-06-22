@@ -1,8 +1,8 @@
 import * as signalR from '@microsoft/signalr';
 import {compose} from 'lodash/fp';
-import {appSettings} from '../../settings/appSettings';
 
-const build = (url, logLevel) => {
+
+export const build = (url, logLevel = signalR.LogLevel.Debug) => {
     return new signalR.HubConnectionBuilder()
         .withUrl(url)
         .withAutomaticReconnect(reconnectPolicy())
@@ -10,7 +10,7 @@ const build = (url, logLevel) => {
         .build();
 }
 
-const start = async (hub) => {
+export const start = async (hub) => {
     try {
         if(hub.state === signalR.HubConnectionState.Connected)
             return hub;
@@ -38,10 +38,12 @@ const reconnectPolicy = () => {
     }
 }
 
-export const connectSignalRHub = async (url, logLevel = signalR.LogLevel.Debug) => {
-    try {
-        return compose(await start, build)(url, logLevel);
-    } catch (e) {
-        console.log(e);
-    }
+const addEventListeners = hub => {
+    hub.on('games/available', games => {
+        console.log(games);
+    });
+    hub.on('players/available', players => {
+        console.log(players);
+    });
+    return hub;
 }

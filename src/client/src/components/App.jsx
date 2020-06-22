@@ -1,21 +1,24 @@
 import m from 'mithril';
 import {compose} from 'lodash/fp';
 import {connect} from '../application/redux/store/connect';
-import {setHub} from "../application/redux/actions/game";
-import {withRedraw} from '../lib/withRedraw';
+import {setHubsConnection} from '../application/redux/actions/hubs';
 import {appRoutes} from '../appRoutes';
+import { appSettings } from '../settings/appSettings';
+import { build } from '../application/hub/signalr';
 
 const mapStateToAttr = state => ({
-    hub: state.game.hub
+    connection: state.hubs.connection
 })
 
 const mapDispatchToAttr = dispatch => ({
-    setHub: hub => compose(withRedraw, dispatch, setHub)(hub)
+    setHubsConnection: connection => compose(dispatch, setHubsConnection)(connection)
 })
 
 const App = () => ({
-    oncreate: async ({ attrs: { hub, setHub, settings }, dom }) => {
-        //setHub(await connectSignalRHub(settings.hub.url));
+    oninit: ({ attrs: { setHubsConnection } }) => {
+        setHubsConnection(build(appSettings.hub.url));
+    },
+    oncreate: ({ attrs: { connection, setHubsConnection, settings }, dom }) => {
         m.route.prefix = settings.routing.prefix;
         m.route(dom, settings.routing.rootPath, appRoutes());
     },
