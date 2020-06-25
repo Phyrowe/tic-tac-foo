@@ -11,13 +11,13 @@ const mapDispatchToAttr = dispatch => ({
     createGame: size => compose(dispatch, createGame)(size)
 })
 
-export const Test = ({
+const Test = ({
     oncreate: ({ attrs: {games} }) => {
     },
     oninit: ({ attrs: {games} }) => {
     },
     view: ({ attrs: {createGame} }) => (
-        <main>
+        <div>
             <button className={'btn btn-blue'} onclick={() => createGame(10)} >Create</button>
             <div className={'grid-board'}>
                 <div>1</div>
@@ -25,7 +25,7 @@ export const Test = ({
                 <div>3</div>
                 <div>4</div>
             </div>
-        </main>
+        </div>
     )
 })
 

@@ -1,5 +1,3 @@
-import m from 'mithril';
-import * as signalR from '@microsoft/signalr';
 import {compose} from 'lodash/fp';
 import {start} from '../../hub/signalr';
 import {SET_HUBS_CONNECTION} from "../actions/hubs";

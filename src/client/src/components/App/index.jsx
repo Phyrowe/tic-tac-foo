@@ -1,10 +1,10 @@
 import m from 'mithril';
 import {compose} from 'lodash/fp';
-import {connect} from '../application/redux/store/connect';
-import {setHubsConnection} from '../application/redux/actions/hubs';
-import {appRoutes} from '../appRoutes';
-import { appSettings } from '../settings/appSettings';
-import { build } from '../application/hub/signalr';
+import {connect} from '../../application/redux/store/connect';
+import {setHubsConnection} from '../../application/redux/actions/hubs';
+import {appRoutes} from '../../appRoutes';
+import {appSettings} from '../../settings/appSettings';
+import {build} from '../../application/hub/signalr';
 
 const mapStateToAttr = state => ({
     connection: state.hubs.connection
@@ -16,7 +16,7 @@ const mapDispatchToAttr = dispatch => ({
 
 const App = () => ({
     oninit: ({ attrs: { setHubsConnection } }) => {
-        setHubsConnection(build(appSettings.hub.url));
+        compose(setHubsConnection, build)(appSettings.hub.url);
     },
     oncreate: ({ attrs: { connection, setHubsConnection, settings }, dom }) => {
         m.route.prefix = settings.routing.prefix;
