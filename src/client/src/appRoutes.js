@@ -1,11 +1,17 @@
 import m from 'mithril';
-import Test from './components/Test';
+import {GameLayout} from './layouts/GameLayout';
+import {GamesLobbyLayout} from './layouts/GamesLobbyLayout';
+import {TestLayout} from './layouts/TestLayout';
 
 export const appRoutes = () => ({
-    '/': {
-        view: () => <Test />
-    },
-    '/game/:id': {
-        view: ({attrs: {id}}) => <h1>Game {id}</h1>
-    },
+    '/': 
+        buildRoute(GamesLobbyLayout),
+    '/test':
+        buildRoute(TestLayout),
+    '/game/:id': ({attrs}) => 
+        buildRoute(GameLayout, attrs)
+});
+
+const buildRoute = (Layout, attrs = {}) => ({
+    view: () => <Layout {...attrs} />
 });
