@@ -1,13 +1,13 @@
 import m from 'mithril';
 import {GameLayout} from './layouts/GameLayout';
-import {GamesLobbyLayout} from './layouts/GamesLobbyLayout';
-import {TestLayout} from './layouts/TestLayout';
+import GamesLobbyLayout from './layouts/GamesLobbyLayout';
+import PlayerRegisterLayout from './layouts/PlayerRegisterLayout';
 
 export const appRoutes = () => ({
     '/': 
-        buildRoute(GamesLobbyLayout),
-    '/test':
-        buildRoute(TestLayout),
+        buildRoute(PlayerRegisterLayout),
+    '/games/lobby': ({attrs}) => 
+        buildRoute(GamesLobbyLayout, attrs),
     '/game/:id': ({attrs}) => 
         buildRoute(GameLayout, attrs)
 });

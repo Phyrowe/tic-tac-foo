@@ -32,8 +32,8 @@ namespace TicTacFoo.Api
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                 });
-            services.AddApplication();
             services.AddInfrastructure();
+            services.AddApplication();
             services.AddServicesByAttribute();
             services.AddSignalR()
                 .AddJsonProtocol(options =>

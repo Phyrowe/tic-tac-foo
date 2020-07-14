@@ -7,7 +7,7 @@ const mapStateToAttr = state => ({
 export const GamesHistory = ({
     view: () => (
         <div>
-            History
+            <h1 className="header-text">History &amp; statistics</h1>
         </div>
     )
 })

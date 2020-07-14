@@ -5,8 +5,9 @@ export const setGamesAvailable = available => ({
 });
 
 export const CREATE_GAME = 'CREATE_GAME';
-export const createGame = size => ({
+export const createGame = (name, size) => ({
     type: CREATE_GAME,
+    name,
     size
 });
 

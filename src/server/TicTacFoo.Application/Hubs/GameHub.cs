@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using TicTacFoo.Application.Common.Attributes;
 using TicTacFoo.Application.Common.Interfaces;
-using TicTacFoo.Domain.Common.Enums;
+using TicTacFoo.Domain.Enums;
 
 namespace TicTacFoo.Application.Hubs
 {
@@ -63,12 +63,11 @@ namespace TicTacFoo.Application.Hubs
         }
 
         [HubMethodName("games/create")]
-        public async Task Create(int width)
+        public async Task Create(string name, int width)
         {
             try
             {
-                if (width < 3) width = 3;
-                await _gameService.CreateAsync(Context, new Piece[width * width]);
+                await _gameService.CreateAsync(Context, name, width);
                 await SendGamesAvailable();
             }
             catch (Exception e)
@@ -82,7 +81,6 @@ namespace TicTacFoo.Application.Hubs
         {
             try
             {
-                // Join game
                 await _gameService.JoinAsync(Context, gameId);
                 await SendGamesAvailable();
             }
@@ -97,7 +95,7 @@ namespace TicTacFoo.Application.Hubs
         {
             try
             {
-                await _gameService.SendAvailableAsync("games/available", HubGroup.Players);
+                await _gameService.SendAvailableAsync(HubGroup.Players, "games/available");
             }
             catch (Exception e)
             {
@@ -110,7 +108,21 @@ namespace TicTacFoo.Application.Hubs
         {
             try
             {
-                await _playerService.SendAvailableAsync("players/available", HubGroup.Players);
+                await _playerService.SendAvailableAsync(HubGroup.Players, "players/available");
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        
+        [HubMethodName("players/update/name")]
+        public async Task UpdatePlayerName(string name)
+        {
+            try
+            {
+                _playerService.UpdatePlayerName(Context, name);
+                await _playerService.SendAvailableAsync(HubGroup.Players, "players/available");
             }
             catch (Exception e)
             {

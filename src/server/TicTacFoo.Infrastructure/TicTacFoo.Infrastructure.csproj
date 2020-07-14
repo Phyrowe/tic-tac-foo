@@ -5,7 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TicTacFoo.Application\TicTacFoo.Application.csproj" />
       <ProjectReference Include="..\TicTacFoo.Domain\TicTacFoo.Domain.csproj" />
     </ItemGroup>
 

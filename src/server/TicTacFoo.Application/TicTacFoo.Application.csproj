@@ -6,7 +6,6 @@
 
     <ItemGroup>
       <Folder Include="Common\Exceptions" />
-      <Folder Include="Repositories" />
     </ItemGroup>
 
     <ItemGroup>
@@ -20,6 +19,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TicTacFoo.Domain\TicTacFoo.Domain.csproj" />
+      <ProjectReference Include="..\TicTacFoo.Infrastructure\TicTacFoo.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Mapster" Version="5.3.2" />
+      <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
     </ItemGroup>
 
 </Project>

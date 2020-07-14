@@ -5,8 +5,8 @@ using TicTacFoo.Application.Common.Attributes;
 using TicTacFoo.Application.Common.Extensions;
 using TicTacFoo.Application.Common.Interfaces;
 using TicTacFoo.Application.Hubs;
-using TicTacFoo.Domain.Common.Enums;
-using TicTacFoo.Domain.Common.Models;
+using TicTacFoo.Domain.Enums;
+using TicTacFoo.Domain.Poco;
 
 namespace TicTacFoo.Application.Services
 {

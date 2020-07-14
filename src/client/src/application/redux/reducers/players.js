@@ -11,6 +11,15 @@ export const players = (state = initialState, action) => {
                 ...state,
                 available: action.available
             };
+        /*case SET_PLAYERS_NAME:
+            return {
+                ...state,
+                available: {
+                    [action.id]: {
+                        ...state.available[action.id], name: action.name
+                    }
+                }
+            };*/
         default:
             return state;
     }

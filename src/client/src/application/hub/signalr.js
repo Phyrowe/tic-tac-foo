@@ -13,7 +13,7 @@ export const start = async (hub) => {
         if(hub.state === HubConnectionState.Connected)
             return hub;
         await hub.start();
-        return await hub;
+        return hub;
     } catch (e) {
         console.error(e);
         setTimeout(async () => await start(hub), 6000);

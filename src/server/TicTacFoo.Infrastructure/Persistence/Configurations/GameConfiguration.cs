@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TicTacFoo.Domain.Common.Entities;
+using TicTacFoo.Domain.Entities;
 
 namespace TicTacFoo.Infrastructure.Persistence.Configurations
 {
@@ -8,6 +8,8 @@ namespace TicTacFoo.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Game> builder)
         {
+            builder.Property(g => g.Name)
+                .IsRequired();
         }
     }
 }
