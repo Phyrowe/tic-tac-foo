@@ -1,4 +1,4 @@
-﻿namespace TicTacFoo.Domain.Common.Enums
+﻿namespace TicTacFoo.Domain.Enums
 {
     public enum HubGroup
     {

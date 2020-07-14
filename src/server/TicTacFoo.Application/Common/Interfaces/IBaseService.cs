@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
-using TicTacFoo.Domain.Common.Enums;
+using TicTacFoo.Domain.Enums;
 
 namespace TicTacFoo.Application.Common.Interfaces
 {
