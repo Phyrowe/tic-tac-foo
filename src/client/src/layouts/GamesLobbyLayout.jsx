@@ -27,16 +27,15 @@ const GamesLobbyLayout = (initialVnode) => {
         },
         view: () => (
             <AppLayout>
-                <div class='grid-container'>
-                    <div></div>
-                    <div>
+                <div class='grid grid-cols-12'>
+                    <div class="col-span-3"></div>
+                    <div class="col-span-6">
                         <GamesCreate />
                         <GamesAvailable />
                         <PlayersAvailable />
                         <GamesHistory />
                     </div>
-                    <div>
-                    </div>
+                    <div class="col-span-3"></div>
                 </div>
             </AppLayout>
         )

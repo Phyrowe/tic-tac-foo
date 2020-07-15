@@ -3,6 +3,7 @@ import {connect} from '../application/redux/store/connect';
 import {getOr} from 'lodash/fp';
 import {AppLayout} from './AppLayout';
 import PlayerRegister from '../components/Players/PlayerRegister';
+import PlayersAvailable from '../components/Players/PlayersAvailable';
 
 const mapStateToAttr = state => ({
     playerId: getOr(false, `connectionId`, state.hubs.connection),
@@ -29,11 +30,12 @@ const PlayerRegisterLayout = (initialVnode) => {
         view: () => (
             <AppLayout>
                 <div class='grid-container'>
-                    <div></div>
-                    <div>
+                    <div class="col-span-3"></div>
+                    <div class="col-span-6">
                         <PlayerRegister />
+                        <PlayersAvailable />
                     </div>
-                    <div></div>
+                    <div class="col-span-3"></div>
                 </div>
             </AppLayout>
         )

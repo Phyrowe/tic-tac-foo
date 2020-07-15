@@ -17,7 +17,7 @@ const PlayersAvailable = (initialVnode) => {
                             <th>Name</th>
                             <th>Piece</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
