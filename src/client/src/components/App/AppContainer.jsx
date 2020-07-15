@@ -2,7 +2,7 @@ import m from 'mithril';
 
 export const AppContainer = ({
     view: ({children}) => (
-        <div>
+        <div class="container mx-auto">
             {children}
         </div>
     )

@@ -18,14 +18,14 @@ const GamesAvailableList = (initialVnode) => {
     return {
         view: ({ attrs: {games, players} }) => (
             <div>
-                <h1 className="header-text">Available games</h1>
+                <h1 class="header-text">Available games</h1>
                 <table class="table-primary">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Players</th>
                             <th>Observers</th>
-                            <th>Actions</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
